@@ -1,0 +1,16 @@
+backend:
+  name: github
+  repo: pham1507/t08
+  branch: master
+media_folder: images
+public_folder: /images
+collections:
+  - name: pages
+    label: Pages
+    files:
+      - file: index.md
+        label: Trang chủ
+        name: home
+        fields:
+          - { label: Tiêu đề, name: title, widget: string }
+          - { label: Nội dung, name: body, widget: markdown }

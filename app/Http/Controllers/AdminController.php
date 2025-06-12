@@ -64,7 +64,6 @@ class AdminController extends Controller
 
         return view('admin.dashboard', compact('userCount', 'productCount', 'contacts', 'dailyRevenue', 'startDate', 'endDate', 'topProducts'));
 
-        // return view('admin.dashboard', compact('userCount', 'productCount', 'contacts', 'todayRevenue', 'topProduct'));
     }
 
     public function getRevenueData(Request $request)
