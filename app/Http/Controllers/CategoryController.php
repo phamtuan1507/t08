@@ -21,14 +21,6 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255|unique:categories',
-        //     'description' => 'nullable|string',
-        // ]);
-
-        // Category::create($request->all());
-
-        // return redirect()->route('categories.index')->with('success', 'Category created successfully.');
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
         ]);
@@ -49,14 +41,6 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
-        //     'description' => 'nullable|string',
-        // ]);
-
-        // $category->update($request->all());
-
-        // return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
         ]);
@@ -72,8 +56,6 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        // $category->delete();
-        // return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
         try {
             $category->delete();
             return redirect()->route('admin.categories.index')->with('success', 'Danh mục đã được xóa.');

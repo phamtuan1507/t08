@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: pham1507/t08
+  repo: phamtuan1507/t08
   branch: master
 media_folder: images
 public_folder: /images
