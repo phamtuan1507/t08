@@ -20,12 +20,19 @@
         @endif
 
         <div class="bg-white rounded-lg shadow p-6">
-            <form action="{{ route('admin.categories.store') }}" method="POST">
+            <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700">Tên danh mục</label>
                     <input type="text" name="name" id="name" value="{{ old('name') }}" class="w-full p-2 border rounded @error('name') border-red-500 @enderror">
                     @error('name')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="image" class="block text-gray-700">Ảnh danh mục</label>
+                    <input type="file" name="image" id="image" class="w-full p-2 border rounded @error('image') border-red-500 @endif">
+                    @error('image')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>

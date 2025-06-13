@@ -36,6 +36,7 @@
                         <tr class="bg-gray-200">
                             <th class="px-4 py-3">ID</th>
                             <th class="px-4 py-3">Tên danh mục</th>
+                            <th class="px-4 py-3">Ảnh</th>
                             <th class="px-4 py-3">Hành động</th>
                         </tr>
                     </thead>
@@ -44,6 +45,12 @@
                             <tr class="border-b">
                                 <td class="px-4 py-3">{{ $category->id }}</td>
                                 <td class="px-4 py-3">{{ $category->name }}</td>
+                                <td class="p-4">
+                                    @if ($category->image)
+                                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                                            class="w-32 h-32 object-cover mt-2">
+                                    @endif
+                                </td>
                                 <td class="px-4 py-3 flex space-x-2">
                                     <a href="{{ route('admin.categories.edit', $category) }}" class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition">Sửa</a>
                                     <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa danh mục này?')">

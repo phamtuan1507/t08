@@ -20,7 +20,7 @@
         @endif
 
         <div class="bg-white rounded-lg shadow p-6">
-            <form action="{{ route('admin.categories.update', $category) }}" method="POST">
+            <form action="{{ route('admin.categories.update', $category) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
@@ -29,6 +29,14 @@
                     @error('name')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="image" class="block text-gray-700">Hình ảnh</label>
+                    <input type="file" name="image" id="image" class="w-full p-2 border rounded">
+                    @if ($category->image)
+                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                            class="w-32 h-32 object-cover mt-2">
+                    @endif
                 </div>
                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Cập nhật</button>
             </form>
