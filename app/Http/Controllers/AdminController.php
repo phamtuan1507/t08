@@ -87,17 +87,6 @@ class AdminController extends Controller
 
     public function statistic(Request $request)
     {
-        // $userCount = User::count();
-        // $productCount = Product::count();
-        // $contacts = Contact::orderBy('created_at', 'desc')->get();
-
-        // $todayRevenue = Order::whereDate('created_at', today())->sum('total');
-        // $topProduct = OrderItem::select('product_id')
-        //     ->groupBy('product_id')
-        //     ->with('product')
-        //     ->orderByRaw('SUM(quantity) DESC')
-        //     ->first();
-
         $startDate = $request->input('start_date', now()->startOfMonth());
         $endDate = $request->input('end_date', now()->endOfDay());
 
@@ -183,56 +172,6 @@ class AdminController extends Controller
 
     public function showChart()
     {
-
-        // $start = Carbon::parse(User::min("created_at"));
-        // $end = Carbon::now();
-        // $period = CarbonPeriod::create($start, "1 month", $end);
-
-        // $usersPerMonth = collect($period)->map(function ($date) {
-        //     $endDate = $date->copy()->endOfMonth();
-
-        //     return [
-        //         "count" => User::where("created_at", "<=", $endDate)->count(),
-        //         "month" => $endDate->format("Y-m-d")
-        //     ];
-        // });
-
-        // $data = $usersPerMonth->pluck("count")->toArray();
-        // $labels = $usersPerMonth->pluck("month")->toArray();
-
-        // $chart = Chartjs::build()
-        //     ->name("UserRegistrationsChart")
-        //     ->type("line")
-        //     ->size(["width" => 400, "height" => 200])
-        //     ->labels($labels)
-        //     ->datasets([
-        //         [
-        //             "label" => "User Registrations",
-        //             "backgroundColor" => "rgba(38, 185, 154, 0.31)",
-        //             "borderColor" => "rgba(38, 185, 154, 0.7)",
-        //             "data" => $data
-        //         ]
-        //     ])
-        //     ->options([
-        //         'scales' => [
-        //             'x' => [
-        //                 'type' => 'time',
-        //                 'time' => [
-        //                     'unit' => 'month'
-        //                 ],
-        //                 'min' => $start->format("Y-m-d"),
-        //             ]
-        //         ],
-        //         'plugins' => [
-        //             'title' => [
-        //                 'display' => true,
-        //                 'text' => 'Monthly User Registrations'
-        //             ]
-        //         ]
-        //     ]);
-
-        // return view("admin.statistic.index", compact("chart"));
-
         $start = Carbon::parse(User::min("created_at")) ?? Carbon::now()->subYear();
         $end = Carbon::now();
         $period = CarbonPeriod::create($start, "1 month", $end);

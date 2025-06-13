@@ -18,9 +18,6 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/products', [UserProductController::class, 'index'])->name('products.list');
@@ -37,27 +34,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-
-// Route cho User
-// Route::middleware(['auth', 'role:user'])->group(function () {
-//     Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-// });
-
-// // Route cho Admin
-// Route::middleware(['auth', 'role:admin'])->group(function () {
-//     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-// });
-
-// Auth::routes();
-
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-    // Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    // Route::resource('products', ProductController::class);
-    // Route::resource('categories', CategoryController::class);
-    // Route::get('/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
-    // Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
-    // Route::put('/orders/{order}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
-    // Route::delete('/orders/{order}', [AdminOrderController::class, 'destroy'])->name('admin.orders.destroy');
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/api/dashboard/revenue', [AdminController::class, 'getRevenueData'])->name('api.dashboard.revenue');
     Route::resource('products', ProductController::class)->names([

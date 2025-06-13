@@ -129,3 +129,33 @@ $(document).ready(function () {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('loginModal');
+    const closeModal = document.querySelector('.close-modal');
+    const closeBtn = document.querySelector('.close-btn');
+    const openModalLinks = document.querySelectorAll('.open-modal');
+
+    openModalLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const productName = link.getAttribute('data-product-name');
+            document.getElementById('modal-product-name').textContent = productName;
+            modal.classList.remove('hidden');
+        });
+    });
+
+    closeModal.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
+});

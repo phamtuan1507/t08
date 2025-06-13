@@ -52,34 +52,6 @@ class CheckoutController extends Controller
         return view('user.checkout.index', compact('items', 'cartCount', 'categories', 'subtotal', 'discountAmount', 'total', 'discountCode'));
     }
 
-    // public function applyDiscount(Request $request)
-    // {
-    // $request->validate([
-    //     'discount_code' => 'required|string',
-    // ]);
-
-    // $code = DiscountCode::where('code', $request->discount_code)
-    //     ->where('is_active', true)
-    //     ->where(function ($query) {
-    //         $query->whereNull('expires_at')
-    //             ->orWhere('expires_at', '>', now());
-    //     })
-    //     ->where(function ($query) {
-    //         $query->whereNull('user_id')
-    //             ->orWhere('user_id', Auth::id());
-    //     })
-    //     ->first();
-
-    // if (!$code) {
-    //     return redirect()->back()->with('error', 'Mã giảm giá không hợp lệ hoặc đã hết hạn.');
-    // }
-
-    // session()->put('discount_code_id', $code->id);
-
-    // return redirect()->back()->with('success', 'Áp dụng mã giảm giá thành công!');
-
-    // }
-
     public function applyDiscount(Request $request)
     {
         $discountCode = DiscountCode::where('code', $request->discount_code)
@@ -185,19 +157,6 @@ class CheckoutController extends Controller
 
     public function success(Order $order)
     {
-        // if ($order->user_id !== Auth::id()) {
-        //     abort(403);
-        // }
-
-        // $cartCount = Cart::where('user_id', Auth::id())->first()->items()->sum('quantity') ?? 0;
-        // $categories = \App\Models\Category::all();
-
-        // Log::info('Rendering checkout success', [
-        //     'order_id' => $order->id,
-        //     'view' => 'user.checkout.success',
-        // ]);
-
-        // return view('user.checkout.success', compact('order', 'cartCount', 'categories'));
         if ($order->user_id !== Auth::id()) {
             abort(403);
         }

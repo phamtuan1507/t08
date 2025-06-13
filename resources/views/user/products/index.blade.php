@@ -48,19 +48,6 @@
                     </div>
                 </div>
             </form>
-
-            {{-- <!-- Thanh tìm kiếm với gợi ý -->
-            <div class="relative mt-4">
-                <form action="{{ route('products.search') }}" method="GET">
-                    <input type="text" id="search-input" name="query" placeholder="Tìm kiếm sản phẩm..." value="{{ request('query') }}" class="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" onkeyup="suggestProducts()">
-                    <button type="submit" class="absolute right-2 top-2">
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </button>
-                </form>
-                <div id="suggestions" class="absolute z-10 w-full bg-white border rounded-lg shadow-lg mt-1 max-h-48 overflow-y-auto hidden"></div>
-            </div> --}}
         </div>
 
         <!-- Danh sách sản phẩm -->

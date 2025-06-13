@@ -308,6 +308,17 @@ table tr:hover {
     width: 100%;
 }
 
+.banner-carousel .item img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 0.5rem; /* Tương ứng với rounded-lg */
+}
+
+
+
+
 /* Secondary Menu Styles */
 nav.bg-gray-200 ul {
     padding: 0;
@@ -602,4 +613,68 @@ nav.bg-gray-200 ul li {
 .header {
     position: relative;
     z-index: 10;
+}
+
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    max-width: 400px;
+    width: 90%;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #718096;
+}
+
+.login-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3182ce;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.login-btn:hover {
+    background-color: #2b6cb0;
+}
+
+.close-btn {
+    padding: 10px 20px;
+    background-color: #e53e3e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.close-btn:hover {
+    background-color: #c53030;
+}
+
+.hidden {
+    display: none;
 }

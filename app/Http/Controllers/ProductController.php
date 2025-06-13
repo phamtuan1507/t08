@@ -57,14 +57,6 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // $data = $request->all();
-        // if ($request->hasFile('image')) {
-        //     $data['image'] = $request->file('image')->store('products', 'public');
-        // }
-
-        // Product::create($data);
-
-        // return redirect()->route('products.index')->with('success', 'Product created successfully.');
         try {
             $data = $request->only(['name', 'description', 'price', 'stock', 'category_id']);
             if ($request->hasFile('image')) {
@@ -103,17 +95,6 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // $data = $request->all();
-        // if ($request->hasFile('image')) {
-        //     if ($product->image) {
-        //         Storage::disk('public')->delete($product->image);
-        //     }
-        //     $data['image'] = $request->file('image')->store('products', 'public');
-        // }
-
-        // $product->update($data);
-
-        // return redirect()->route('products.index')->with('success', 'Product updated successfully.');
         try {
             $data = $request->only(['name', 'description', 'price', 'stock', 'category_id']);
             if ($request->hasFile('image')) {
@@ -133,11 +114,6 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        //     if ($product->image) {
-        //         Storage::disk('public')->delete($product->image);
-        //     }
-        //     $product->delete();
-        //     return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
         try {
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);

@@ -17,7 +17,6 @@ class PageController extends Controller
 {
     public function about(Request $request)
     {
-        // return view('pages.about');
         try {
             $query = Product::with('category');
             if ($request->has('category')) {

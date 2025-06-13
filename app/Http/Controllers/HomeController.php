@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
+use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use App\Models\Category;
-use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use App\Models\Banner;
-
 
 class HomeController extends Controller
 {
@@ -26,7 +24,7 @@ class HomeController extends Controller
             $categories = Category::all();
             $banners = Banner::orderBy('order')->get();
             Log::info('Rendering homepage view', ['view' => 'welcome']);
-            return view('welcome', compact('products', 'cartCount', 'categories','banners'));
+            return view('welcome', compact('products', 'cartCount', 'categories', 'banners'));
         } catch (\Exception $e) {
             Log::error('Error rendering homepage', ['error' => $e->getMessage()]);
             abort(404, 'Page not found');

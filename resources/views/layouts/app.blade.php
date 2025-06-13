@@ -110,12 +110,24 @@
                         </select>
                     </form>
                 </div>
-                <a href="{{ route('cart.index') }}" class="relative cart-btn ripple px-4 py-2 rounded-md">
+                {{-- <a href="{{ route('cart.index') }}" class="relative cart-btn ripple px-4 py-2 rounded-md">
                     Giỏ hàng
                     @if (isset($cartCount) && $cartCount > 0)
                         <span class="absolute -top-2 -right-2 cart-count" id="cart-count">{{ $cartCount }}</span>
                     @else
                         <span class="text-gray-300 ml-2 text-sm">0</span>
+                    @endif
+                </a> --}}
+                <a href="{{ route('cart.index') }}" class="relative cart-btn ripple px-4 py-2 rounded-md text-center">
+                    <svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+                        </path>
+                    </svg>
+                    @if (isset($cartCount) && $cartCount > 0)
+                        <span class="absolute -top-2 -right-2 cart-count" id="cart-count">{{ $cartCount }}</span>
+                    @else
+                        <span class="text-gray-300 ml-2 text-sm hidden md:inline">0</span>
                     @endif
                 </a>
                 @auth
@@ -123,7 +135,8 @@
                         <button id="userDropdown1" class="px-4 py-2 rounded-md user-btn">
                             {{ Auth::user()->name }}
                         </button>
-                        <div id="dropdownMenu1" class="absolute right-0 z-50 mt-2 w-48 bg-white rounded-lg shadow-lg hidden">
+                        <div id="dropdownMenu1"
+                            class="absolute right-0 z-50 mt-2 w-48 bg-white rounded-lg shadow-lg hidden">
                             <a href="{{ route('dashboard') }}"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Dashboard</a>
                             <a href="{{ route('profile.index') }}"
@@ -139,9 +152,36 @@
                     </div>
                 @else
                     <a href="{{ route('login') }}"
-                        class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Đăng nhập</a>
+                        class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                fill="#e5e7eb" />
+                            <path
+                                d="M18 13H15C13.6739 13 12.4021 13.5268 11.4645 14.4645C10.5268 15.4021 10 16.6739 10 18V21H14V18C14 17.2044 14.3161 16.4413 14.8787 15.8787C15.4413 15.3161 16.2044 15 17 15H18V13Z"
+                                fill="#e5e7eb" />
+                            <path d="M4 12H6V14H4C2.89543 14 2 13.1046 2 12C2 10.8954 2.89543 10 4 10V12Z"
+                                fill="#e5e7eb" />
+                        </svg>
+                    </a>
                     <a href="{{ route('register') }}"
-                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Đăng ký</a>
+                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2Z"
+                                fill="#e5e7eb" />
+                            <path
+                                d="M18 14H15C13.6739 14 12.4021 14.5268 11.4645 15.4645C10.5268 16.4021 10 17.6739 10 19V22H14V19C14 18.2044 14.3161 17.4413 14.8787 16.8787C15.4413 16.3161 16.2044 16 17 16H18V14Z"
+                                fill="#e5e7eb" />
+                            <path d="M5 12H7V14H5C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10V12Z"
+                                fill="#e5e7eb" />
+                            <path d="M19 8H21V10H19V12H17V10H15V8H17V6H19V8Z" fill="#e5e7eb" />
+                        </svg>
+                    </a>
                 @endauth
             </div>
         </div>
@@ -198,7 +238,8 @@
                             tức</a>
                     </li> --}}
                     @foreach ($menus as $menu)
-                        <li><a href="{{ $menu->url ?? '#' }}" class="hover:text-blue-600">{{ $menu->name }}</a></li>
+                        <li><a href="{{ $menu->url ?? '#' }}" class="hover:text-blue-600">{{ $menu->name }}</a>
+                        </li>
                     @endforeach
                 </ul>
             </div>

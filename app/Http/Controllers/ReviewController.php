@@ -38,10 +38,6 @@ class ReviewController extends Controller
 
     public function approve($id)
     {
-        // $review = Review::findOrFail($id);
-        // $review->update(['approved' => true]);
-        // return redirect()->back()->with('success', 'Đánh giá đã được phê duyệt.');
-
         try {
             $review = Review::findOrFail($id);
             $review->update(['approved' => true]);
@@ -56,9 +52,6 @@ class ReviewController extends Controller
 
     public function destroy($id)
     {
-        // $review = Review::findOrFail($id);
-        // $review->delete();
-        // return redirect()->back()->with('success', 'Đánh giá đã được xóa.');
         try {
             $review = Review::findOrFail($id);
             $review->delete();
