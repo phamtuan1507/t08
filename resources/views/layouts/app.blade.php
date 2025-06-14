@@ -10,8 +10,8 @@
 
 <body class="bg-gray-100 font-sans">
     <!-- Header -->
-    <header class="header bg-white shadow-md">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <header class="header bg-white shadow-md" style="background-color:#bc9669">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center" style="background-color:#bc9669">
             <!-- Mobile Menu Toggle -->
 
             <div class="md:hidden">
@@ -22,15 +22,6 @@
                     </svg>
                 </button>
                 <ul id="menuList" class="hidden mt-2 space-y-2 bg-gray-200 p-2 rounded">
-                    {{-- <li><a href="{{ route('home') }}" class="block text-gray-800 hover:text-blue-600">Trang chủ</a></li>
-                    <li><a href="{{ route('products.list') }}" class="block text-gray-800 hover:text-blue-600">Sản
-                            phẩm</a>
-                    </li>
-                    <li><a href="{{ route('about') }}" class="block text-gray-800 hover:text-blue-600">Giới thiệu</a>
-                    </li>
-                    <li><a href="{{ route('contact') }}" class="block text-gray-800 hover:text-blue-600">Liên hệ</a>
-                    </li>
-                    <li><a href="{{ route('news') }}" class="block text-gray-800 hover:text-blue-600">Tin tức</a></li> --}}
                     @foreach ($menus as $menu)
                         <li><a href="{{ $menu->url ?? '#' }}" class="hover:text-blue-600">{{ $menu->name }}</a></li>
                     @endforeach
@@ -223,7 +214,7 @@
     </header>
     <div class="container search-none">
         <!-- Secondary Menu -->
-        <nav class="bg-gray-200 shadow-md">
+        <nav class="shadow-md" style="background-color: #bc9669">
             <div class="container mx-auto px-4 py-2">
                 <ul class="flex space-x-6 overflow-x-auto whitespace-nowrap">
                     {{-- <li><a href="{{ route('home') }}" class="text-gray-800 hover:text-blue-600 font-medium">Trang
@@ -247,7 +238,7 @@
 
     </div>
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-8" style="background-color:#bc9669">
         @if (session('success'))
             <div class="bg-green-100 text-green-700 p-4 rounded-lg mb-6 shadow">
                 {{ session('success') }}

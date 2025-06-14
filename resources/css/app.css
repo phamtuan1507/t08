@@ -11,7 +11,7 @@ body {
 }
 
 header {
-    @apply flex justify-between items-center mb-8;
+    @apply flex justify-between items-center;
 }
 
 .product-card {
@@ -685,17 +685,17 @@ nav.bg-gray-200 ul li {
     height: 25rem;
     background-size: 100% 100%;
     box-shadow: 20px 20px 10px gray;
-    animation: slider 15s linear infinite;
+    animation: slider 20s linear infinite;
 }
 @keyframes slider {
     0%{
-        background-image: url(/public/images/bg-1.jpg);
+        background-image: url(/public/images/slideshow_1.jpg);
     }
     25%{
-        background-image: url(/public/images/bg-2.jpg);
+        background-image: url(/public/images/slideshow_2.jpg);
     }
     50%{
-        background-image: url(/public/images/bg-3.jpg);
+        background-image: url(/public/images/slideshow_3.jpg);
     }
     75%{
         background-image: url(/public/images/bg-4.jpg);
@@ -791,4 +791,11 @@ nav.bg-gray-200 ul li {
     color: #4a2c2a;
     padding: 10px;
     margin: 0;
+}
+.category{
+    background-color: #bc9669;
+}
+
+.h-300px{
+    height: 300px;
 }

@@ -3,8 +3,26 @@
 @section('title', 'Trang chủ')
 
 @section('content')
+    <section class="container py-5">
+        <div class="bg-demo">
+            <div class="bg-demo__content">
+                <h2 class="text-lg font-bold text-white pb-3">
+                    CHÀO MỪNG QUÝ KHÁCH ĐẾN VỚI T-Shop!
+                </h2>
+                <a href="/about" class="flex gap-1 relative cart-btn ripple px-4 py-2 rounded-md text-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="#4FD1C5" />
+                        <path d="M12 8V12L14 14" stroke="#2D3748" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <circle cx="12" cy="16" r="1" fill="#2D3748" />
+                    </svg>
+                    Tìm hiểu về chúng tôi
+                </a>
+            </div>
+        </div>
+    </section>
 
-    <section>
+    {{-- <section>
         <!-- Carousel Banner -->
         <div class="col-span-1 sm:col-span-2 lg:col-span-3">
             <div class="banner-carousel owl-carousel mb-8">
@@ -19,13 +37,29 @@
                 @endforeach
             </div>
         </div>
+    </section> --}}
+
+    <section class="category py-5">
+        <h2 class="line-bottom text-lg font-bold mb-5">Danh mục sản phẩm</h2>
+        <div class="category-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach ($categories->take(3) as $category)
+                <a href="{{ route('user.categories.show', $category) }}">
+                    <div class="category-card">
+                        <img src="{{ $category->image && Storage::disk('public')->exists($category->image) ? asset('storage/' . $category->image) : asset('images/no-image.jpg') }}"
+                            alt="{{ $category->name }}">
+                        <h3>{{ Str::upper($category->name) }}</h3>
+                    </div>
+                </a>
+            @endforeach
+        </div>
     </section>
+
     <section>
         @if ($products->isEmpty())
             <p class="text-gray-600 text-lg text-center">Không có sản phẩm nào.</p>
         @else
             <div class="my-4">
-                <h2 class="line-bottom text-lg font-bold">Danh sách sản phẩm</h2>
+                <h2 class="line-bottom text-lg font-bold">Menu</h2>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {{-- @foreach ($products as $product)
@@ -127,23 +161,119 @@
             </div>
         </div>
     </section>
-    <section class="container pt-5">
-        <div class="bg-demo">
-            <div class="bg-demo__content">
-                <h2 class="text-lg font-bold text-white pb-3">
-                    CHÀO MỪNG QUÝ KHÁCH ĐẾN VỚI T-Shop!
-                </h2>
-                <a href="/about" class="flex gap-1 relative cart-btn ripple px-4 py-2 rounded-md text-center">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" fill="#4FD1C5"/>
-                        <path d="M12 8V12L14 14" stroke="#2D3748" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="12" cy="16" r="1" fill="#2D3748"/>
-                    </svg>
-                    Tìm hiểu về chúng tôi
+
+    <section>
+        <h2 class="text-2xl sm:text-3xl font-bold text-center text-yellow-800 mb-4 sm:mb-6">cheer BÁNH - chill HẾ CÙNG
+            ARTEMIS!</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
+            <!-- Main Section (2x2 on lg, full-width on sm) -->
+            @if ($categories->count() > 0)
+                <a href="{{ route('user.categories.show', $categories->first()) }}"
+                    class="col-span-1 lg:col-span-2 lg:row-span-2 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="{{ $categories->first()->image ? asset('storage/' . $categories->first()->image) : 'https://via.placeholder.com/400x400' }}"
+                            alt="{{ $categories->first()->name }}" class="w-full h-full object-cover">
+                    </div>
                 </a>
-            </div>
+            @else
+                <a href="#" class="col-span-1 lg:col-span-2 lg:row-span-2 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="https://via.placeholder.com/400x400" alt="No Category" class="w-full h-full object-cover">
+                    </div>
+                </a>
+            @endif
+
+            <!-- Top Right Section (1x1) -->
+            @if ($categories->skip(1)->first())
+                <a href="{{ route('user.categories.show', $categories->skip(1)->first()) }}"
+                    class="col-span-1 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="{{ $categories->skip(1)->first()->image ? asset('storage/' . $categories->skip(1)->first()->image) : 'https://via.placeholder.com/300x300' }}"
+                            alt="{{ $categories->skip(1)->first()->name }}" class="w-full h-full object-cover">
+                    </div>
+                </a>
+            @else
+                <a href="#" class="col-span-1 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="https://via.placeholder.com/300x300" alt="No Category" class="w-full h-full object-cover">
+                    </div>
+                </a>
+            @endif
+
+            <!-- Bottom Left Section (1x1) -->
+            @if ($categories->skip(2)->first())
+                <a href="{{ route('user.categories.show', $categories->skip(2)->first()) }}"
+                    class="col-span-1 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="{{ $categories->skip(2)->first()->image ? asset('storage/' . $categories->skip(2)->first()->image) : 'https://via.placeholder.com/300x300' }}"
+                            alt="{{ $categories->skip(2)->first()->name }}" class="w-full h-full object-cover">
+                    </div>
+                </a>
+            @else
+                <a href="#" class="col-span-1 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="https://via.placeholder.com/300x300" alt="No Category"
+                            class="w-full h-full object-cover">
+                    </div>
+                </a>
+            @endif
+
+            <!-- Bottom Middle Section (1x1) -->
+            @if ($categories->skip(3)->first())
+                <a href="{{ route('user.categories.show', $categories->skip(3)->first()) }}"
+                    class="col-span-1 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="{{ $categories->skip(3)->first()->image ? asset('storage/' . $categories->skip(3)->first()->image) : 'https://via.placeholder.com/300x300' }}"
+                            alt="{{ $categories->skip(3)->first()->name }}" class="w-full h-full object-cover">
+                    </div>
+                </a>
+            @else
+                <a href="#" class="col-span-1 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="https://via.placeholder.com/300x300" alt="No Category"
+                            class="w-full h-full object-cover">
+                    </div>
+                </a>
+            @endif
+
+            <!-- Bottom Right Section (1x1) -->
+            @if ($categories->skip(4)->first())
+                <a href="{{ route('user.categories.show', $categories->skip(4)->first()) }}"
+                    class="col-span-1 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="{{ $categories->skip(4)->first()->image ? asset('storage/' . $categories->skip(4)->first()->image) : 'https://via.placeholder.com/300x300' }}"
+                            alt="{{ $categories->skip(4)->first()->name }}" class="w-full h-full object-cover">
+                    </div>
+                </a>
+            @else
+                <a href="#" class="col-span-1 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="https://via.placeholder.com/300x300" alt="No Category"
+                            class="w-full h-full object-cover">
+                    </div>
+                </a>
+            @endif
+
+            <!-- Bottom Right Section (1x1) -->
+            @if ($categories->skip(5)->first())
+                <a href="{{ route('user.categories.show', $categories->skip(5)->first()) }}"
+                    class="col-span-1 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="{{ $categories->skip(5)->first()->image ? asset('storage/' . $categories->skip(5)->first()->image) : 'https://via.placeholder.com/300x300' }}"
+                            alt="{{ $categories->skip(5)->first()->name }}" class="w-full h-full object-cover">
+                    </div>
+                </a>
+            @else
+                <a href="#" class="col-span-1 rounded-lg shadow-lg overflow-hidden">
+                    <div class="w-full aspect-square">
+                        <img src="https://via.placeholder.com/300x300" alt="No Category"
+                            class="w-full h-full object-cover">
+                    </div>
+                </a>
+            @endif
         </div>
     </section>
+
     <section class="pt-5 choose">
         <h1 class="title text-center">TẠI SAO NÊN CHỌN CHÚNG TÔI?</h1>
         <div class="icon-group">
@@ -191,22 +321,6 @@
                 </div>
                 <p class="icon-text">Có các phòng lớn tổ chức hội nghị với sự kiện</p>
             </div> --}}
-        </div>
-    </section>
-    <section class="category">
-        <div class="category-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="category-card">
-                <img src="https://via.placeholder.com/300x200" alt="Bánh Sinh Nhật">
-                <h3>BÁNH SINH NHẬT</h3>
-            </div>
-            <div class="category-card">
-                <img src="https://via.placeholder.com/300x200" alt="Bánh Lẻ">
-                <h3>BÁNH LẺ</h3>
-            </div>
-            <div class="category-card">
-                <img src="https://via.placeholder.com/300x200" alt="Giftset">
-                <h3>GIFTSET</h3>
-            </div>
         </div>
     </section>
 @endsection

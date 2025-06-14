@@ -6,7 +6,9 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\Cart;
+use App\Models\Product;
 class CategoryController extends Controller
 {
     public function index()
@@ -83,5 +85,35 @@ class CategoryController extends Controller
             Log::error('Error deleting category', ['category_id' => $category->id, 'error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Không thể xóa danh mục.');
         }
+    }
+    public function show(Request $request,Category $category)
+    {
+        $query = $category->products()->with(['category', 'reviews']);
+
+        // Apply category filter
+        if ($request->has('category') && $request->category) {
+            $query->where('category_id', $request->category);
+        }
+
+        // Apply sorting
+        if ($request->has('sort') && $request->sort) {
+            if ($request->sort === 'price_asc') {
+                $query->orderBy('price', 'asc');
+            } elseif ($request->sort === 'price_desc') {
+                $query->orderBy('price', 'desc');
+            }
+        }
+
+        $products = $query->paginate(12);
+        $cartCount = 0;
+        if (Auth::check()) {
+            $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
+            $cartCount = $cart->items()->sum('quantity');
+        }
+
+        $categories = Category::all();
+
+        Log::info('Rendering product list', ['view' => 'user.categories.products.list', 'query' => $request->all()]);
+        return view('user.categories.show', compact('category','categories', 'products'));
     }
 }

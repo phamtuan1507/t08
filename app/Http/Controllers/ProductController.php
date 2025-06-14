@@ -7,6 +7,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Cart;
 
 class ProductController extends Controller
 {
@@ -124,5 +126,55 @@ class ProductController extends Controller
             Log::error('Error deleting product', ['product_id' => $product->id, 'error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Không thể xóa sản phẩm.');
         }
+    }
+    public function list(Request $request, Category $category)
+    {
+        $query = Product::with(['category', 'reviews']);
+
+        // Apply search filter
+        if ($request->has('query') && $request->query) {
+            $query->where('name', 'like', '%' . $request->query . '%');
+        }
+
+        // Apply category filter
+        if ($request->has('category') && $request->category) {
+            $query->where('category_id', $request->category);
+        }
+
+        // Apply sorting
+        if ($request->has('sort') && $request->sort) {
+            if ($request->sort === 'price_asc') {
+                $query->orderBy('price', 'asc');
+            } elseif ($request->sort === 'price_desc') {
+                $query->orderBy('price', 'desc');
+            }
+        }
+
+        // Lọc khoảng giá
+        $priceMin = $request->input('price_min', 0);
+        $priceMax = $request->input('price_max', 1000);
+        $query->whereBetween('price', [$priceMin, $priceMax]);
+
+        // Lọc đánh giá
+        if ($ratings = $request->input('rating', [])) {
+            $query->whereHas('reviews', function ($q) use ($ratings) {
+                $q->whereIn('rating', $ratings);
+            });
+        }
+
+        $products = $query->paginate(12);
+
+        // Calculate cart count
+        $cartCount = 0;
+        if (Auth::check()) {
+            $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
+            $cartCount = $cart->items()->sum('quantity');
+        }
+
+        $categories = Category::all();
+
+        Log::info('Rendering product list', ['view' => 'user.categories.products.list', 'query' => $request->all()]);
+        // $products = $category->products()->filter(request()->all())->paginate(12); // Example filtering
+        return view('user.categories.products.list', compact('category', 'products', 'categories'));
     }
 }

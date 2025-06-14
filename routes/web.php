@@ -132,3 +132,5 @@ Route::post('/products/{product}/review', [ReviewController::class, 'store'])->n
 
 Route::get('/checkout/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');
 
+Route::get('/category/{category}', [CategoryController::class, 'show'])->name('user.categories.show');
+Route::get('/category/{category}/products', [ProductController::class, 'list'])->name('category.products.list');
