@@ -40,7 +40,7 @@
     </section> --}}
 
     <section class="category py-5">
-        <h2 class="line-bottom text-lg font-bold mb-5">Danh mục sản phẩm</h2>
+        <h2 class="line-bottom text-2xl font-bold mb-5">Danh mục sản phẩm</h2>
         <div class="category-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($categories->take(3) as $category)
                 <a href="{{ route('user.categories.show', $category) }}">
@@ -56,10 +56,10 @@
 
     <section>
         @if ($products->isEmpty())
-            <p class="text-gray-600 text-lg text-center">Không có sản phẩm nào.</p>
+            <p class="text-gray-600 text-2xl text-center">Không có sản phẩm nào.</p>
         @else
             <div class="my-4">
-                <h2 class="line-bottom text-lg font-bold">Menu</h2>
+                <h2 class="line-bottom text-2xl font-bold">Menu</h2>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {{-- @foreach ($products as $product)
@@ -163,8 +163,9 @@
     </section>
 
     <section>
-        <h2 class="text-2xl sm:text-3xl font-bold text-center text-yellow-800 mb-4 sm:mb-6">cheer BÁNH - chill HẾ CÙNG
-            ARTEMIS!</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold text-center text-yellow-800 mb-4 sm:mb-6">
+            cheer BÁNH - chill HẾ CÙNG T-Shop!
+        </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
             <!-- Main Section (2x2 on lg, full-width on sm) -->
             @if ($categories->count() > 0)

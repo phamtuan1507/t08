@@ -19,7 +19,8 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return view('admin.categories.create');
+        $parentCategories = Category::whereNull('parent_id')->get();
+        return view('admin.categories.create', compact('parentCategories'));
     }
 
     public function store(Request $request)
@@ -27,10 +28,11 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'parent_id' => 'nullable|exists:categories,id',
         ]);
 
         try {
-            $data = $request->only('name');
+            $data = $request->only(['name', 'parent_id']);
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('categories', 'public');
                 $data['image'] = $imagePath;
@@ -46,7 +48,8 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        return view('admin.categories.edit', compact('category'));
+        $parentCategories = Category::whereNull('parent_id')->where('id', '!=', $category->id)->get();
+        return view('admin.categories.edit', compact('category', 'parentCategories'));
     }
 
     public function update(Request $request, Category $category)
@@ -54,10 +57,11 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'parent_id' => 'nullable|exists:categories,id',
         ]);
 
         try {
-            $data = $request->only('name');
+            $data = $request->only(['name', 'parent_id']);
             if ($request->hasFile('image')) {
                 if ($category->image) {
                     Storage::disk('public')->delete($category->image);

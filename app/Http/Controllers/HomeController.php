@@ -21,7 +21,8 @@ class HomeController extends Controller
             }
             $products = $query->paginate(12);
             $cartCount = Auth::check() ? Cart::firstOrCreate(['user_id' => Auth::id()])->items()->sum('quantity') : 0;
-            $categories = Category::all();
+            // $categories = Category::all();
+            $categories = Category::with('children')->whereNull('parent_id')->get();
             $banners = Banner::orderBy('order')->get();
             Log::info('Rendering homepage view', ['view' => 'welcome']);
             return view('welcome', compact('products', 'cartCount', 'categories', 'banners'));

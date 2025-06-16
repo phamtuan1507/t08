@@ -18,7 +18,33 @@
 
         <div class="bg-white rounded-lg shadow p-6">
             <h2 class="text-xl font-semibold text-gray-800 mb-4">{{ $category->name }}</h2>
-            <p class="text-gray-600">ID: {{ $category->id }}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <p class="text-gray-600 mb-2">ID: {{ $category->id }}</p>
+                    @if ($category->image)
+                        <p class="text-gray-600 mb-2">Ảnh:</p>
+                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                            class="w-48 h-48 object-cover mb-4">
+                    @endif
+                    @if ($category->parent)
+                        <p class="text-gray-600 mb-2">Danh mục cha: {{ $category->parent->name }}</p>
+                    @else
+                        <p class="text-gray-600 mb-2">Danh mục cha: Không có</p>
+                    @endif
+                </div>
+                <div>
+                    @if ($category->children->count())
+                        <p class="text-gray-600 mb-2">Danh mục con:</p>
+                        <ul class="list-disc pl-5">
+                            @foreach ($category->children as $child)
+                                <li>{{ $child->name }} (ID: {{ $child->id }})</li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p class="text-gray-600 mb-2">Danh mục con: Không có</p>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 </body>

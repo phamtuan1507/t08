@@ -42,24 +42,48 @@
                     </thead>
                     <tbody>
                         @foreach ($categories as $category)
-                            <tr class="border-b">
-                                <td class="px-4 py-3">{{ $category->id }}</td>
-                                <td class="px-4 py-3">{{ $category->name }}</td>
-                                <td class="p-4">
-                                    @if ($category->image)
-                                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
-                                            class="w-32 h-32 object-cover mt-2">
-                                    @endif
-                                </td>
-                                <td class="px-4 py-3 flex space-x-2">
-                                    <a href="{{ route('admin.categories.edit', $category) }}" class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition">Sửa</a>
-                                    <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa danh mục này?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="remove-btn">Xóa</button>
-                                    </form>
-                                </td>
-                            </tr>
+                            @if ($category->parent_id === null) <!-- Chỉ hiển thị danh mục cha -->
+                                <tr class="border-b">
+                                    <td class="px-4 py-3">{{ $category->id }}</td>
+                                    <td class="px-4 py-3">{{ $category->name }}</td>
+                                    <td class="p-4">
+                                        @if ($category->image)
+                                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                                                class="w-32 h-32 object-cover mt-2">
+                                        @endif
+                                    </td>
+                                    <td class="px-4 py-3 flex space-x-2">
+                                        <a href="{{ route('admin.categories.edit', $category) }}" class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition">Sửa</a>
+                                        <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa danh mục này?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Xóa</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @if ($category->children->count())
+                                    @foreach ($category->children as $child)
+                                        <tr class="border-b bg-gray-50">
+                                            <td class="px-4 py-3 pl-12">{{ $child->id }}</td>
+                                            <td class="px-4 py-3 pl-12">{{ $child->name }}</td>
+                                            <td class="p-4 pl-12">
+                                                @if ($child->image)
+                                                    <img src="{{ asset('storage/' . $child->image) }}" alt="{{ $child->name }}"
+                                                        class="w-32 h-32 object-cover mt-2">
+                                                @endif
+                                            </td>
+                                            <td class="px-4 py-3 pl-12 flex space-x-2">
+                                                <a href="{{ route('admin.categories.edit', $child) }}" class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition">Sửa</a>
+                                                <form action="{{ route('admin.categories.destroy', $child) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa danh mục này?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Xóa</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

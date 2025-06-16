@@ -38,6 +38,20 @@
                             class="w-32 h-32 object-cover mt-2">
                     @endif
                 </div>
+                <div class="mb-4">
+                    <label for="parent_id" class="block text-gray-700">Danh mục cha</label>
+                    <select name="parent_id" id="parent_id" class="w-full p-2 border rounded @error('parent_id') border-red-500 @enderror">
+                        <option value="">Không có danh mục cha</option>
+                        @foreach ($parentCategories as $parent)
+                            <option value="{{ $parent->id }}" {{ old('parent_id', $category->parent_id) == $parent->id ? 'selected' : '' }}>
+                                {{ $parent->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('parent_id')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Cập nhật</button>
             </form>
         </div>
