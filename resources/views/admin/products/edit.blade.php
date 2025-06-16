@@ -42,12 +42,18 @@
                 <textarea name="description" id="description" class="w-full p-2 border rounded">{{ old('description', $product->description) }}</textarea>
             </div>
             <div class="mb-4">
-                <label for="image" class="block text-gray-700">Hình ảnh</label>
+                <label for="image" class="block text-gray-700">Ảnh chính</label>
                 <input type="file" name="image" id="image" class="w-full p-2 border rounded">
-                @if ($product->image)
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                        class="w-32 h-32 object-cover mt-2">
+                @if ($product->image && Storage::disk('public')->exists($product->image))
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-32 h-32 object-cover mt-2">
                 @endif
+            </div>
+            <div class="mb-4">
+                <label for="images" class="block text-gray-700">Ảnh phụ (thumbnails)</label>
+                <input type="file" name="images[]" id="images" multiple class="w-full p-2 border rounded">
+                @foreach ($product->images as $image)
+                    <img src="{{ asset('storage/' . $image->image_path) }}" alt="{{ $product->name }}" class="w-32 h-32 object-cover mt-2">
+                @endforeach
             </div>
             <div class="mb-4">
                 <label for="stock" class="block text-gray-700">Tồn kho</label>

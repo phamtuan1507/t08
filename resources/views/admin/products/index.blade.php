@@ -31,10 +31,25 @@
                         <tr>
                             <td class="p-4">{{ $product->name }}</td>
                             <td class="p-4">
-                                @if ($product->image)
+                                {{-- @if ($product->image)
                                     <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
                                         class="w-32 h-32 object-cover mt-2">
-                                @endif
+                                @endif --}}
+                                <div class="flex flex-col">
+                                    <!-- Hiển thị ảnh chính -->
+                                    @if ($product->image && Storage::disk('public')->exists($product->image))
+                                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                                            class="w-32 h-32 object-cover mb-2">
+                                    @else
+                                        <img src="{{ asset('images/no-image.jpg') }}" alt="No image"
+                                            class="w-32 h-32 object-cover mb-2">
+                                    @endif
+                                    <!-- Hiển thị các thumbnail (ảnh phụ) -->
+                                    @foreach ($product->images as $image)
+                                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="{{ $product->name }}"
+                                            class="w-16 h-16 object-cover mt-1">
+                                    @endforeach
+                                </div>
                             </td>
                             <td class="p-4">${{ number_format($product->price, 2) }}</td>
                             <td class="p-4">{{ $product->stock }}</td>

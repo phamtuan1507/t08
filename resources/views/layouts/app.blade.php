@@ -81,7 +81,7 @@
                 <div class="relative">
                     <input type="text" name="query" placeholder="Tìm kiếm sản phẩm..."
                         value="{{ request()->query('query') }}"
-                        class="w-full p-2 pl-10 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        class="w-full p-2 pl-10 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600">
                     <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

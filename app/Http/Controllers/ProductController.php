@@ -57,15 +57,28 @@ class ProductController extends Controller
             'stock' => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         try {
             $data = $request->only(['name', 'description', 'price', 'stock', 'category_id']);
             if ($request->hasFile('image')) {
                 $data['image'] = $request->file('image')->store('products', 'public');
+            } else {
+                $data['image'] = null; // Đặt giá trị mặc định nếu không upload ảnh chính
             }
 
-            Product::create($data);
+            $product = Product::create($data);
+
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $product->images()->create([
+                        'image_path' => $image->store('products', 'public'),
+                        'is_primary' => false,
+                    ]);
+                }
+            }
+
             return redirect()->route('admin.products.index')->with('success', 'Sản phẩm đã được thêm.');
         } catch (\Exception $e) {
             Log::error('Error creating product', ['error' => $e->getMessage()]);
@@ -75,8 +88,9 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $product->load('category');
-        return view('admin.products.show', compact('product'));
+        $product->load('category', 'images');
+        $cartCount = Auth::check() ? Cart::firstOrCreate(['user_id' => Auth::id()])->items()->sum('quantity') : 0;
+        return view('admin.products.show', compact('product', 'cartCount'));
     }
 
     public function edit(Product $product)
@@ -95,6 +109,7 @@ class ProductController extends Controller
             'stock' => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         try {
@@ -107,6 +122,23 @@ class ProductController extends Controller
             }
 
             $product->update($data);
+
+            if ($request->hasFile('images')) {
+                // Xóa các ảnh phụ cũ
+                foreach ($product->images as $image) {
+                    Storage::disk('public')->delete($image->image_path);
+                }
+                $product->images()->delete();
+
+                // Thêm ảnh phụ mới
+                foreach ($request->file('images') as $image) {
+                    $product->images()->create([
+                        'image_path' => $image->store('products', 'public'),
+                        'is_primary' => false,
+                    ]);
+                }
+            }
+
             return redirect()->route('admin.products.index')->with('success', 'Sản phẩm đã được cập nhật.');
         } catch (\Exception $e) {
             Log::error('Error updating product', ['product_id' => $product->id, 'error' => $e->getMessage()]);
@@ -120,6 +152,10 @@ class ProductController extends Controller
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }
+            foreach ($product->images as $image) {
+                Storage::disk('public')->delete($image->image_path);
+            }
+            $product->images()->delete();
             $product->delete();
             return redirect()->route('admin.products.index')->with('success', 'Sản phẩm đã được xóa.');
         } catch (\Exception $e) {
