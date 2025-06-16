@@ -311,7 +311,7 @@
     </section>
 
     <section class="pt-5 choose">
-        <h1 class="title text-center">TẠI SAO NÊN CHỌN CHÚNG TÔI?</h1>
+        <h2 class="title text-2xl font-bold text-center">TẠI SAO NÊN CHỌN CHÚNG TÔI?</h2>
         <div class="icon-group">
             <div class="icon-card">
                 <div class="icon-circle">

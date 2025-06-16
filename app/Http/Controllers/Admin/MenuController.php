@@ -10,13 +10,14 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $menus = Menu::orderBy('order')->get();
+        $menus = Menu::with('children')->whereNull('parent_id')->orderBy('order')->get();
         return view('admin.menus.index', compact('menus'));
     }
 
     public function create()
     {
-        return view('admin.menus.create');
+        $parentMenus = Menu::whereNull('parent_id')->get();
+        return view('admin.menus.create', compact('parentMenus'));
     }
 
     public function store(Request $request)
@@ -27,6 +28,7 @@ class MenuController extends Controller
             'url' => 'nullable|string',
             'order' => 'required|integer',
             'is_active' => 'boolean',
+            'parent_id' => 'nullable|exists:menus,id',
         ]);
 
         Menu::create($request->all());
@@ -37,7 +39,8 @@ class MenuController extends Controller
     public function edit($id)
     {
         $menu = Menu::findOrFail($id);
-        return view('admin.menus.edit', compact('menu'));
+        $parentMenus = Menu::whereNull('parent_id')->where('id', '!=', $menu->id)->get();
+        return view('admin.menus.edit', compact('menu', 'parentMenus'));
     }
 
     public function update(Request $request, $id)
@@ -48,6 +51,7 @@ class MenuController extends Controller
             'url' => 'nullable|string',
             'order' => 'required|integer',
             'is_active' => 'boolean',
+            'parent_id' => 'nullable|exists:menus,id',
         ]);
 
         $menu = Menu::findOrFail($id);
@@ -59,6 +63,7 @@ class MenuController extends Controller
     public function destroy($id)
     {
         $menu = Menu::findOrFail($id);
+        $menu->children()->delete();
         $menu->delete();
 
         return redirect()->route('admin.menus.index')->with('success', 'Menu deleted successfully.');

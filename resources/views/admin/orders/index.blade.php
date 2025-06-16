@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý đơn hàng</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="bg-gray-100 font-sans">
+@section('content')
     <div class="container mx-auto px-4 py-8">
         <header class="flex justify-between items-center mb-8">
             <h1 class="text-3xl font-bold text-gray-800">Quản lý đơn hàng</h1>
@@ -69,6 +61,4 @@
             </div>
         @endif
     </div>
-</body>
-
-</html>
+@endsection

@@ -727,7 +727,7 @@ nav.bg-gray-200 ul li {
     bottom: -5px;
     left: 50%;
     transform: translateX(-50%);
-    width: 50px;
+    width: 100px;
     height: 2px;
     background-color: #10b981;
 }
@@ -749,7 +749,7 @@ nav.bg-gray-200 ul li {
 .icon-circle {
     width: 120px;
     height: 120px;
-    background-color: #f1c40f;
+    background-color: #10b981;
     border-radius: 50%;
     display: flex;
     justify-content: center;

@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sửa sản phẩm</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="bg-gray-100 font-sans">
+@section('content')
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-gray-800 mb-6">Sửa sản phẩm</h1>
         <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data">
@@ -68,6 +60,4 @@
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Cập nhật</button>
         </form>
     </div>
-</body>
-
-</html>
+@endsection

@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi tiết đơn hàng #{{ $order->id }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="bg-gray-100 font-sans">
+@section('content')
     <div class="container mx-auto px-4 py-8">
-        <header class="flex justify-between items-center mb-8">
+        <div class="flex justify-between items-center mb-8">
             <h1 class="text-3xl font-bold text-gray-800">Chi tiết đơn hàng #{{ $order->id }}</h1>
             <div class="flex space-x-4">
                 <a href="{{ route('admin.orders.index') }}"
@@ -23,7 +15,7 @@
                     <button type="submit" class="remove-btn">Xóa đơn hàng</button>
                 </form>
             </div>
-        </header>
+        </div>
 
         @if (session('success'))
             <div class="bg-green-100 text-green-700 p-4 rounded-lg mb-6 shadow">
@@ -79,6 +71,4 @@
             @endif
         </div>
     </div>
-</body>
-
-</html>
+@endsection

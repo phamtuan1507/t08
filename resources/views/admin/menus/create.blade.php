@@ -25,6 +25,21 @@
                 <label class="block text-gray-700">Trạng thái</label>
                 <input type="checkbox" name="is_active" value="1" checked>
             </div>
+            <div class="mb-4">
+                <label for="parent_id" class="block text-gray-700">Menu cha</label>
+                <select name="parent_id" id="parent_id"
+                    class="w-full p-2 border rounded @error('parent_id') border-red-500 @enderror">
+                    <option value="">Không có menu cha</option>
+                    @foreach ($parentMenus as $parent)
+                        <option value="{{ $parent->id }}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>
+                            {{ $parent->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('parent_id')
+                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Lưu</button>
         </form>
     </div>

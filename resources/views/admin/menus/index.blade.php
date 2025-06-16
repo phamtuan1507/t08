@@ -7,7 +7,7 @@
         @if (session('success'))
             <div class="bg-green-100 text-green-700 p-2 mb-4 rounded">{{ session('success') }}</div>
         @endif
-        <table class="w-full bg-white shadow rounded">
+        <table class="w-full bg-white shadow rounded mt-4">
             <thead>
                 <tr class="bg-gray-200 text-gray-700">
                     <th class="p-2">ID</th>
@@ -21,22 +21,50 @@
             </thead>
             <tbody>
                 @foreach ($menus as $menu)
-                    <tr class="border-b">
-                        <td class="p-2">{{ $menu->id }}</td>
-                        <td class="p-2">{{ $menu->name }}</td>
-                        <td class="p-2">{{ $menu->slug }}</td>
-                        <td class="p-2">{{ $menu->url }}</td>
-                        <td class="p-2">{{ $menu->order }}</td>
-                        <td class="p-2">{{ $menu->is_active ? 'Kích hoạt' : 'Tắt' }}</td>
-                        <td class="p-2">
-                            <a href="{{ route('admin.menus.edit', $menu->id) }}" class="text-blue-600 hover:underline">Sửa</a>
-                            <form action="{{ route('admin.menus.destroy', $menu->id) }}" method="POST" class="inline-block ml-2">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
-                            </form>
-                        </td>
-                    </tr>
+                    @if ($menu->parent_id === null)
+                        <tr class="border-b">
+                            <td class="px-4 py-3">{{ $menu->id }}</td>
+                            <td class="px-4 py-3">{{ $menu->name }}</td>
+                            <td class="px-4 py-3">{{ $menu->slug }}</td>
+                            <td class="px-4 py-3">{{ $menu->url }}</td>
+                            <td class="px-4 py-3">{{ $menu->order }}</td>
+                            <td class="px-4 py-3">{{ $menu->is_active ? 'Tắt' : 'Bật' }}</td>
+                            <td class="px-4 py-3 flex space-x-2">
+                                <a href="{{ route('admin.menus.edit', $menu->id) }}"
+                                    class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition">Sửa</a>
+                                <form action="{{ route('admin.menus.destroy', $menu->id) }}" method="POST"
+                                    onsubmit="return confirm('Bạn có chắc muốn xóa menu này?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Xóa</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @if ($menu->children->count())
+                            @foreach ($menu->children as $child)
+                                <tr class="border-b bg-gray-50">
+                                    <td class="px-4 py-3 pl-12">{{ $child->id }}</td>
+                                    <td class="px-4 py-3 pl-12">{{ $child->name }}</td>
+                                    <td class="px-4 py-3 pl-12">{{ $child->slug }}</td>
+                                    <td class="px-4 py-3 pl-12">{{ $child->url }}</td>
+                                    <td class="px-4 py-3 pl-12">{{ $child->order }}</td>
+                                    <td class="px-4 py-3 pl-12">{{ $child->is_active ? 'Tắt' : 'Bật' }}</td>
+                                    <td class="px-4 py-3 pl-12 flex space-x-2">
+                                        <a href="{{ route('admin.menus.edit', $child->id) }}"
+                                            class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition">Sửa</a>
+                                        <form action="{{ route('admin.menus.destroy', $child->id) }}" method="POST"
+                                            onsubmit="return confirm('Bạn có chắc muốn xóa menu này?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Xóa</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    @endif
                 @endforeach
             </tbody>
         </table>
