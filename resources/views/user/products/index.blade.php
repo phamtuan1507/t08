@@ -20,7 +20,7 @@
                         </select>
                     </div>
 
-                    <!-- Lọc khoảng giá -->
+                    {{-- <!-- Lọc khoảng giá -->
                     <div class="w-full md:w-1/4">
                         <label for="price-range" class="block text-sm font-medium text-gray-700">Khoảng giá</label>
                         <div class="flex items-center gap-2">
@@ -36,7 +36,7 @@
                             <label><input type="checkbox" name="rating[]" value="5" {{ in_array('5', request('rating', [])) ? 'checked' : '' }} onchange="document.getElementById('filter-form').submit()"> 5 sao</label>
                             <label><input type="checkbox" name="rating[]" value="4" {{ in_array('4', request('rating', [])) ? 'checked' : '' }} onchange="document.getElementById('filter-form').submit()"> 4 sao+</label>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Sắp xếp -->
                     <div class="w-full md:w-1/4">

@@ -23,8 +23,9 @@
                 <p class="text-gray-600 mt-2">${{ number_format($product->price, 2) }}</p>
                 <p class="text-gray-600 mt-2">{{ $product->description }}</p>
                 <a href="{{ route('cart.add', $product->id) }}"
-                    class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Thêm vào giỏ
-                    hàng</a>
+                    class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Thêm vào giỏ hàng
+                </a>
 
                 <!-- Đánh giá trung bình -->
                 <div class="mt-4">
