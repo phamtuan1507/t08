@@ -35,6 +35,11 @@
                 <h2 class="text-xl font-semibold text-gray-800">Quản lý danh mục</h2>
                 <p class="text-gray-600 mt-2">Thêm, sửa, xóa danh mục</p>
             </a>
+            <a href="{{ route('admin.posts.index') }}"
+                class="bg-white rounded-lg shadow p-6 text-center hover:bg-gray-50 transition">
+                <h2 class="text-xl font-semibold text-gray-800">Quản lý bài viết</h2>
+                <p class="text-gray-600 mt-2">Thêm, sửa, xóa bài viết</p>
+            </a>
             <a href="{{ route('admin.carts.index') }}"
                 class="bg-white rounded-lg shadow p-6 text-center hover:bg-gray-50 transition">
                 <h2 class="text-xl font-semibold text-gray-800">Quản lý giỏ hàng</h2>

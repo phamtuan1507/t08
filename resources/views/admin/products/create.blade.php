@@ -12,24 +12,28 @@
             @csrf
             <div class="mb-4">
                 <label for="name" class="block text-gray-700">Tên</label>
-                <input type="text" name="name" id="name" value="{{ old('name') }}" class="w-full p-2 border rounded @error('name') border-red-500 @enderror">
+                <input type="text" name="name" id="name" value="{{ old('name') }}"
+                    class="w-full p-2 border rounded @error('name') border-red-500 @enderror">
                 @error('name')
                     <p class="text-red-500 text-sm">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mb-4">
                 <label for="price" class="block text-gray-700">Giá</label>
-                <input type="number" name="price" id="price" step="0.01" value="{{ old('price') }}" class="w-full p-2 border rounded @error('price') border-red-500 @enderror">
+                <input type="number" name="price" id="price" step="0.01" value="{{ old('price') }}"
+                    class="w-full p-2 border rounded @error('price') border-red-500 @enderror">
                 @error('price')
                     <p class="text-red-500 text-sm">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mb-4">
                 <label for="category_id" class="block text-gray-700">Danh mục</label>
-                <select name="category_id" id="category_id" class="w-full p-2 border rounded @error('category_id') border-red-500 @enderror">
+                <select name="category_id" id="category_id"
+                    class="w-full p-2 border rounded @error('category_id') border-red-500 @enderror">
                     <option value="">Chọn danh mục</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}</option>
                     @endforeach
                 </select>
                 @error('category_id')
@@ -41,22 +45,33 @@
                 <textarea name="description" id="description" class="w-full p-2 border rounded">{{ old('description') }}</textarea>
             </div>
             <div class="mb-4">
-                <label for="image" class="block text-gray-700">Hình ảnh</label>
+                <label for="image" class="block text-gray-700">Ảnh chính</label>
                 <input type="file" name="image" id="image" class="w-full p-2 border rounded">
-                @error('image')
-                    <p class="text-red-500 text-sm">{{ $message }}</p>
-                @enderror
+                @if ($product->image && Storage::disk('public')->exists($product->image))
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                        class="w-32 h-32 object-cover mt-2">
+                @endif
+            </div>
+            <div class="mb-4">
+                <label for="images" class="block text-gray-700">Ảnh phụ (thumbnails)</label>
+                <input type="file" name="images[]" id="images" multiple class="w-full p-2 border rounded">
+                @foreach ($product->images as $image)
+                    <img src="{{ asset('storage/' . $image->image_path) }}" alt="{{ $product->name }}"
+                        class="w-32 h-32 object-cover mt-2">
+                @endforeach
             </div>
             <div class="mb-4">
                 <label for="stock" class="block text-gray-700">Tồn kho</label>
-                <input type="number" name="stock" id="stock" value="{{ old('stock') }}" class="w-full p-2 border rounded">
+                <input type="number" name="stock" id="stock" value="{{ old('stock') }}"
+                    class="w-full p-2 border rounded">
                 @error('stock')
                     <p class="text-red-500 text-sm">{{ $message }}</p>
                 @enderror
             </div>
             <div class="flex space-x-4">
                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Lưu</button>
-                <a href="{{ route('admin.products.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Hủy</a>
+                <a href="{{ route('admin.products.index') }}"
+                    class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Hủy</a>
             </div>
         </form>
     </div>

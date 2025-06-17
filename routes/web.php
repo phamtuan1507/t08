@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ImageUploadController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -66,6 +68,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         'update' => 'admin.banners.update',
         'destroy' => 'admin.banners.destroy',
     ]);
+
+    Route::resource('posts', PostController::class)->names([
+        'index' => 'admin.posts.index',
+        'create' => 'admin.posts.create',
+        'store' => 'admin.posts.store',
+        'show' => 'admin.posts.show',
+        'edit' => 'admin.posts.edit',
+        'update' => 'admin.posts.update',
+        'destroy' => 'admin.posts.destroy',
+    ]);
+
     Route::get('/carts', [AdminCartController::class, 'index'])->name('admin.carts.index');
     Route::get('/carts/{cart}', [AdminCartController::class, 'show'])->name('admin.carts.show');
     Route::delete('/carts/{cart}', [AdminCartController::class, 'destroy'])->name('admin.carts.destroy');
@@ -134,3 +147,6 @@ Route::get('/checkout/success/{order}', [CheckoutController::class, 'success'])-
 
 Route::get('/category/{category}', [CategoryController::class, 'show'])->name('user.categories.show');
 Route::get('/category/{category}/products', [ProductController::class, 'list'])->name('category.products.list');
+
+
+Route::post('/upload-image', [ImageUploadController::class, 'upload'])->name('upload-image');
